@@ -29,11 +29,11 @@ pipeline {
             script {
               // Git 커밋 정보
               def Author_ID = sh(script: "git show -s --pretty=%an", returnStdout: true).trim()
-              def Author_Name = sh(script: "git show -s --pretty=%ae", returnStdout: true).trim()
+              def commitMessage = sh(script: "git log -1 --pretty=%B", returnStdout: true).trim()
 
               mattermostSend(
                 color: 'good',
-                message: "빌드 성공: ${env.JOB_NAME} #${env.BUILD_NUMBER} by ${Author_ID}(${Author_Name})\n(<${env.BUILD_URL}|Details>)", 
+                message: "빌드 성공: ${env.JOB_NAME} #${env.BUILD_NUMBER} by ${Author_ID}\n커밋 메시지: ${commitMessage}\n(<${env.BUILD_URL}|Jenkins_url>)", 
                 endpoint: 'https://meeting.ssafy.com/hooks/jf7jzm17zjrtzp8qzzd43mbxje', 
                 channel: 'drmma_jenkins'
               )
@@ -43,13 +43,13 @@ pipeline {
         failure {
             echo 'Pipeline failed.'
             script {
-              // Git 커밋 정보를 가져오는 부분
+              // Git 커밋 정보
               def Author_ID = sh(script: "git show -s --pretty=%an", returnStdout: true).trim()
-              def Author_Name = sh(script: "git show -s --pretty=%ae", returnStdout: true).trim()
+              def commitMessage = sh(script: "git log -1 --pretty=%B", returnStdout: true).trim()
 
               mattermostSend(
                 color: 'danger', 
-                message: "빌드 실패: ${env.JOB_NAME} #${env.BUILD_NUMBER} by ${Author_ID}(${Author_Name})\n(<${env.BUILD_URL}|Details>)", 
+                message: "빌드 실패: ${env.JOB_NAME} #${env.BUILD_NUMBER} by ${Author_ID}\n커밋 메시지: ${commitMessage}\n(<${env.BUILD_URL}|Jenkins_url>)", 
                 endpoint: 'https://meeting.ssafy.com/hooks/jf7jzm17zjrtzp8qzzd43mbxje', 
                 channel: 'drmma_jenkins'
               )
