@@ -2,7 +2,7 @@ version: '3.8'
 services:
   fastapi:
     image: fastapi:latest
-    build: ./drmma  # drmma 디렉토리에서 Dockerfile을 사용해 이미지 빌드
+    build: .  # drmma 디렉토리에서 Dockerfile을 사용해 이미지 빌드
     container_name: backend
     environment:
       TZ: Asia/Seoul
@@ -10,7 +10,7 @@ services:
       - "8081:8081"
     networks:
       - nginx_network
-      
+
 networks:
   nginx_network:
     external: true
