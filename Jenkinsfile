@@ -14,7 +14,7 @@ pipeline {
                 echo 'Deploying with Docker Compose...'
                 sh '''
                     # 새로운 이미지를 빌드하고 모든 컨테이너 실행
-                    docker-compose up -d --build
+                    docker compose up -d --build
                 '''
             }
         }
